@@ -1,0 +1,45 @@
+# Docker Compose file for Python Environment Demo
+# This shows how to orchestrate multiple services
+
+version: '3.8'
+
+services:
+  # Main web application
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=true
+      - PORT=8000
+    volumes:
+      # Mount source code for development (remove in production)
+      - ./app.py:/app/app.py
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  # Development environment with different configuration
+  web-dev:
+    build: .
+    ports:
+      - "8001:8000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=true
+      - PORT=8000
+    volumes:
+      - .:/app
+    profiles:
+      - dev
+    networks:
+      - app-network
+
+volumes:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge

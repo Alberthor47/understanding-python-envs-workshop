@@ -1,0 +1,11 @@
+# Container Demo Requirements
+# This file demonstrates how to specify dependencies for containerized applications
+
+# Web framework
+flask==2.3.3
+
+# HTTP client library (for demonstration)
+requests==2.31.0
+
+# Environment variable management
+python-dotenv==1.0.0
